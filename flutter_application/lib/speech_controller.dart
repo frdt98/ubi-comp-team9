@@ -6,6 +6,7 @@ class SpeechController extends ChangeNotifier {
   bool available = false;
   String? _stationName;
   bool detected = false;
+  bool listening = false;
 
   set station(String value) {
     _stationName = value;
@@ -19,17 +20,19 @@ class SpeechController extends ChangeNotifier {
   }
 
   listen() async {
+    listening = true;
+    notifyListeners();
     _speech.listen(
         localeId: "ko_KR",
         onResult: (val) {
           if (val.hasConfidenceRating && val.confidence > 0) {
             final text = val.recognizedWords;
-            if (text == "이번 정류장은 서울대입구역입니다" || text == "이번 정류장은 서울대입구역입니다") {
+            if (text == "이번 정류장은 $_stationName") {
               stop();
               detected = true;
+
               notifyListeners();
             }
-            ;
           }
         });
   }

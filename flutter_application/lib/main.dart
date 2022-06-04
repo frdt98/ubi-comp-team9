@@ -1,5 +1,6 @@
 import 'package:bus_stop_app/location_controller.dart';
 import 'package:bus_stop_app/screens/main_screen.dart';
+import 'package:bus_stop_app/screens/splash_screen.dart';
 import 'package:bus_stop_app/speech_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SpeechController()),
       ],
       child: MaterialApp(
+        color: const Color.fromRGBO(85, 182, 215, 1),
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          backgroundColor: const Color.fromRGBO(85, 182, 215, 100),
         ),
-        home: MainScreen(),
+        home: SplashScreen(),
       ),
     );
   }
