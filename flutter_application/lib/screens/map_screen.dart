@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bus_stop_app/location_controller.dart';
 import 'package:bus_stop_app/speech_controller.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +47,6 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Consumer2<SpeechController, LocationController>(
         builder: (context, speechController, locationController, child) {
-      if (speechController.detected) {
-        locationController.locationSubscription.cancel();
-      }
       return Scaffold(
         backgroundColor: const Color.fromRGBO(85, 182, 215, 1),
         body: SafeArea(
@@ -146,10 +142,14 @@ class _MapScreenState extends State<MapScreen> {
                               const SizedBox(height: 8.0),
                               (speechController.listening &&
                                       !speechController.detected)
-                                  ? const Text(
-                                      "Now listening",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 32.0),
+                                  ? const SizedBox(
+                                      height: 32.0,
+                                      child: Text(
+                                        "Now listening",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24.0),
+                                      ),
                                     )
                                   : Container(
                                       height: 32.0,

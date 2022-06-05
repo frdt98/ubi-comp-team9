@@ -36,8 +36,8 @@ class LocationController extends ChangeNotifier {
           stationLocations[_station]!["long"]!,
           currentLocation.latitude!,
           currentLocation.longitude!);
-      print(distance);
-      if (distance < 2000000) {
+      if (distance < 300) {
+        locationSubscription.cancel();
         speechController.listen();
       }
     });

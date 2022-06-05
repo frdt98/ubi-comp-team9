@@ -1,11 +1,17 @@
 import 'package:bus_stop_app/location_controller.dart';
-import 'package:bus_stop_app/screens/main_screen.dart';
+import 'package:bus_stop_app/notification_controller.dart';
 import 'package:bus_stop_app/screens/splash_screen.dart';
 import 'package:bus_stop_app/speech_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
+
   runApp(const MyApp());
 }
 
@@ -25,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           backgroundColor: const Color.fromRGBO(85, 182, 215, 100),
         ),
-        home: SplashScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
