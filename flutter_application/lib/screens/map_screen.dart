@@ -47,6 +47,9 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Consumer2<SpeechController, LocationController>(
         builder: (context, speechController, locationController, child) {
+      if (speechController.detected) {
+        locationController.locationSubscription.cancel();
+      }
       return Scaffold(
         backgroundColor: const Color.fromRGBO(85, 182, 215, 1),
         body: SafeArea(
