@@ -23,7 +23,7 @@ class SpeechController extends ChangeNotifier {
   listen() async {
     listening = true;
 
-    notifyListeners();
+   notifyListeners();
     _speech.listen(
         localeId: "ko_KR",
         onResult: (val) {
