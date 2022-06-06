@@ -1,5 +1,13 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:bus_stop_app/constants/stations.dart';
+import 'package:bus_stop_app/screens/main_screen.dart';
+import 'package:bus_stop_app/speech_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart' as Geolocation;
 
 class LocationController extends ChangeNotifier {
   final Location location = Location();
@@ -7,30 +15,43 @@ class LocationController extends ChangeNotifier {
   late PermissionStatus _permissionGranted;
   String? _station;
   bool _inRadius = false;
+  late StreamSubscription<LocationData> locationSubscription;
 
   bool get inRadius {
     return _inRadius;
-  }
-
-  isInRadius() {
-    // TODO check if the current location is in the radius of the Station
-    if (_station == '서울대 입구') {
-      _inRadius = true;
-      notifyListeners();
-    }
   }
 
   String? get station {
     return _station;
   }
 
-  set station(String? value) {
+  setStation(String? value, SpeechController speechController) {
+    locationSubscription =
+        location.onLocationChanged.listen((LocationData currentLocation) {
+      currentLocation.longitude;
+      currentLocation.latitude;
+
+      final distance = Geolocation.Geolocator.distanceBetween(
+          stationLocations[_station]!["lat"]!,
+          stationLocations[_station]!["long"]!,
+          currentLocation.latitude!,
+          currentLocation.longitude!);
+      if (distance < 300) {
+        locationSubscription.cancel();
+        speechController.listen();
+      }
+    });
     _station = value;
+
     notifyListeners();
   }
 
-  initLocation() async {
+  initLocationAndSpeech(
+      SpeechController speechController, BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 1000), () {});
     serviceEnabled = await location.serviceEnabled();
+    await speechController.initSpeech();
+
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
@@ -45,9 +66,15 @@ class LocationController extends ChangeNotifier {
         return;
       }
     }
+    await location.changeSettings(accuracy: LocationAccuracy.high);
 
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      isInRadius();
-    });
+    Navigator.of(context).pushReplacement(
+      CupertinoPageRoute(
+        builder: (
+          BuildContext context,
+        ) =>
+            const MainScreen(),
+      ),
+    );
   }
 }

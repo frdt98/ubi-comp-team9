@@ -9,25 +9,59 @@ class StationDropdown extends StatelessWidget {
   final Function onChanged;
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: value,
-      iconSize: 0,
-      elevation: 16,
-      hint: const Text("Station name"),
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? newValue) {
-        onChanged(newValue);
-      },
-      items: stationNames.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
+    return Material(
+      color: Colors.white,
+      elevation: 8,
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        child: DropdownButton<String>(
+          onChanged: (newvalue) {
+            onChanged(newvalue);
+          },
           value: value,
-          child: Text(value),
-        );
-      }).toList(),
+
+          // Hide the default underline
+          underline: Container(),
+          hint: const Center(
+              child: Text(
+            'Choose your destination',
+            style: TextStyle(color: Colors.grey),
+          )),
+          icon: const Icon(
+            Icons.arrow_downward,
+            color: Colors.black,
+          ),
+          isExpanded: true,
+
+          // The list of options
+          items: stationNames
+              .map((e) => DropdownMenuItem(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        e,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    value: e,
+                  ))
+              .toList(),
+
+          // Customize the selected item
+          selectedItemBuilder: (BuildContext context) => stationNames
+              .map((e) => Center(
+                    child: Text(
+                      e,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 }

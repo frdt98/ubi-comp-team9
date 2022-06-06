@@ -1,3 +1,4 @@
+import 'package:bus_stop_app/notification_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -6,6 +7,7 @@ class SpeechController extends ChangeNotifier {
   bool available = false;
   String? _stationName;
   bool detected = false;
+  bool listening = false;
 
   set station(String value) {
     _stationName = value;
@@ -19,17 +21,24 @@ class SpeechController extends ChangeNotifier {
   }
 
   listen() async {
+    listening = true;
+
+    notifyListeners();
     _speech.listen(
         localeId: "ko_KR",
         onResult: (val) {
           if (val.hasConfidenceRating && val.confidence > 0) {
             final text = val.recognizedWords;
-            if (text == "이번 정류장은 서울대입구역입니다" || text == "이번 정류장은 서울대입구역입니다") {
+            if (text == "이번 정류장은 $_stationName입니다") {
               stop();
               detected = true;
+              NotificationService().showNotification(
+                1,
+                "Go out",
+                "You reached your destination!",
+              );
               notifyListeners();
             }
-            ;
           }
         });
   }
