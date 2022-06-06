@@ -1,0 +1,11 @@
+Main Gate|37.466886|126.947713
+College of Business Administration|37.465847|126.951114
+Veterinary College. Graduate school of Public Health|37.465936|126.954662
+Graduate School of International Studies|37.463594|126.954806
+Gwanak Samgeori|37.460452|126.956738
+National Center for Inter-University Research Facilities|37.455065|126.954511
+Gene Engineering Research Center|37.453736|126.953518
+Energy & Resource Research Center|37.45354|126.952107
+Sinsojae|37.453609|126.950175
+Institute of Construction and Environmental Engineering front|37.447144|37.447144
+The 2nd Engineering Building|37.448072|126.951995
