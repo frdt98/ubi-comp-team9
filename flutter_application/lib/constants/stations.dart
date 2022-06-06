@@ -11,6 +11,7 @@ final stationNames = [
   '에너지자원연구소',
   "신소재",
   '건설환경종합연구소앞',
+  '제 2공학관',
 ];
 
 final Map<String, Map<String, double>> stationLocations = {
@@ -24,5 +25,5 @@ final Map<String, Map<String, double>> stationLocations = {
   '에너지자원연구소': {"lat": 37.45354, "long": 126.952107},
   '신소재': {"lat": 37.453609, "long": 126.950175},
   '건설환경종합연구소앞': {"lat": 37.447144, "long": 37.447144},
-  '제2공학관': {"lat": 37.448072, "long": 126.951995}
+  '제 2공학관': {"lat": 37.448072, "long": 126.951995}
 };

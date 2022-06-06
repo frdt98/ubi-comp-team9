@@ -29,7 +29,10 @@ class SpeechController extends ChangeNotifier {
         onResult: (val) {
           if (val.hasConfidenceRating && val.confidence > 0) {
             final text = val.recognizedWords;
-            if (text == "이번 정류장은 $_stationName입니다") {
+            print(text.replaceAll(" ", ""));
+            final name = _stationName!.replaceAll(" ", "");
+            if (RegExp(r'.*이.*' + name + r'.*다음.*')
+                .hasMatch(text.replaceAll(" ", ""))) {
               stop();
               detected = true;
               NotificationService().showNotification(
